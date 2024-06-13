@@ -1,4 +1,5 @@
 # Practice 1 - Generate window, changing size and position
+
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget
 
