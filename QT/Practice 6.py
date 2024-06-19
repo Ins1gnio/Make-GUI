@@ -1,7 +1,8 @@
-# Practice 6 - add to list based on line-edit
+# Practice 6 - label text style change based on check-box's state
 
 import sys
-from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, QWidget, QListWidget, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, QWidget, QLabel, QCheckBox, QVBoxLayout
 
 
 class MyApp(QMainWindow):
@@ -9,38 +10,41 @@ class MyApp(QMainWindow):
         super().__init__(*args, **kwargs)
         self.setwindow()
 
-        self.list_1 = QListWidget(self)         # define list and place it on the window (self)
+        self.label_1 = QLabel('PYQT5', self)      # define label and place it on the window (self)
+        self.label_1.setStyleSheet("font-size: 30px")   # define font size
+        self.label_1.setAlignment(Qt.AlignCenter)   # place text in the middle
 
-        self.lineedit_1 = QLineEdit(self)       # define line-edit
+        self.checkbox_1 = QCheckBox("Bold?", self)  # check-box 1 for bold
+        self.checkbox_2 = QCheckBox("Italic?", self)    # check-box 2 for italic
+        self.checkbox_3 = QCheckBox("Underline?", self)     # check-box 3 for underline
 
-        self.button_1 = QPushButton('Enter', self)  # add enter button
-        self.button_1.setShortcut('Return')         # add enter as keyboard shortcut
-        self.button_2 = QPushButton('Clear', self)  # add clear button
-        self.button_2.setShortcut('Escape')         # add escape as keyboard shortcut
-
-        self.hbox_1 = QHBoxLayout(self)             # define horizontal layout (left to right)
-        self.hbox_1.addWidget(self.lineedit_1)
-        self.hbox_1.addWidget(self.button_1)
-        self.hbox_1.addWidget(self.button_2)
-
-        self.vbox_1 = QVBoxLayout(self)             # define vertical layout (top to bottom)
-        self.vbox_1.addWidget(self.list_1)
-        self.vbox_1.addLayout(self.hbox_1)
+        self.vbox = QVBoxLayout(self)           # define vertical layout (top to bottom)
+        self.vbox.addWidget(self.label_1)
+        self.vbox.addWidget(self.checkbox_1)
+        self.vbox.addWidget(self.checkbox_2)
+        self.vbox.addWidget(self.checkbox_3)
 
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)  # place the widget as a whole window
 
-        self.central_widget.setLayout(self.vbox_1)    # set layout to vbox
+        self.central_widget.setLayout(self.vbox)    # set layout to vbox
 
-        self.button_1.clicked.connect(self.enter)   # action --> enter text to list
-        self.button_2.clicked.connect(self.clear)   # action --> clear list
+        self.checkbox_1.clicked.connect(self.update_style)  # action 1
+        self.checkbox_2.clicked.connect(self.update_style)  # action 2
+        self.checkbox_3.clicked.connect(self.update_style)  # action 3
 
-    def enter(self):
-        self.list_1.addItems([str(self.lineedit_1.text())])
-        self.lineedit_1.clear()
+    def update_style(self):
+        style = "font-size: 30px;"  # default font style
 
-    def clear(self):
-        self.list_1.clear()
+        if self.checkbox_1.isChecked():
+            style += " font-weight: bold;"
+        if self.checkbox_2.isChecked():
+            style += " font-style: italic;"
+        if self.checkbox_3.isChecked():
+            style += " text-decoration: underline;"
+
+        print(style)
+        self.label_1.setStyleSheet(style)   # update font style
 
     def setwindow(self):
         self.setWindowTitle("QT-Practice 6")
