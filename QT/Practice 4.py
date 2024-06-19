@@ -1,8 +1,7 @@
-# Practice 4 - label text style change based on check-box's state
+# Practice 4 - window setting, then add button
 
 import sys
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, QWidget, QLabel, QCheckBox, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QPushButton, QMainWindow
 
 
 class MyApp(QMainWindow):
@@ -10,41 +9,20 @@ class MyApp(QMainWindow):
         super().__init__(*args, **kwargs)
         self.setwindow()
 
-        self.label_1 = QLabel('PYQT5', self)      # define label and place it on the window (self)
-        self.label_1.setStyleSheet("font-size: 30px")   # define font size
-        self.label_1.setAlignment(Qt.AlignCenter)   # place text in the middle
+        self.button_1 = QPushButton("Press", self)      # define button, with name and place on the window (self)
+        self.button_1.setStyleSheet("background-color: red; font-size: 30px")   # define initial color + font size
+        self.button_1.clicked.connect(self.button_1_click)  # signal & slots --> to do action
+        self.state = False  # button state
 
-        self.checkbox_1 = QCheckBox("Bold?", self)  # check-box 1 for bold
-        self.checkbox_2 = QCheckBox("Italic?", self)    # check-box 2 for italic
-        self.checkbox_3 = QCheckBox("Underline?", self)     # check-box 3 for underline
+        self.setCentralWidget(self.button_1)    # place the button widget as a whole window
 
-        self.vbox = QVBoxLayout(self)           # define vertical layout (top to bottom)
-        self.vbox.addWidget(self.label_1)
-        self.vbox.addWidget(self.checkbox_1)
-        self.vbox.addWidget(self.checkbox_2)
-        self.vbox.addWidget(self.checkbox_3)
-
-        self.central_widget = QWidget(self)
-        self.setCentralWidget(self.central_widget)  # place the widget as a whole window
-
-        self.central_widget.setLayout(self.vbox)    # set layout to vbox
-
-        self.checkbox_1.clicked.connect(self.update_style)  # action 1
-        self.checkbox_2.clicked.connect(self.update_style)  # action 2
-        self.checkbox_3.clicked.connect(self.update_style)  # action 3
-
-    def update_style(self):
-        style = "font-size: 30px;"  # default font style
-
-        if self.checkbox_1.isChecked():
-            style += " font-weight: bold;"
-        if self.checkbox_2.isChecked():
-            style += " font-style: italic;"
-        if self.checkbox_3.isChecked():
-            style += " text-decoration: underline;"
-
-        print(style)
-        self.label_1.setStyleSheet(style)   # update font style
+    def button_1_click(self):
+        if not self.state:  # state 1
+            self.button_1.setStyleSheet("background-color: green; font-size: 30px")
+            self.state = True
+        else:   # state 2
+            self.button_1.setStyleSheet("background-color: red; font-size: 30px")
+            self.state = False
 
     def setwindow(self):
         self.setWindowTitle("QT-Practice 4")
@@ -53,7 +31,6 @@ class MyApp(QMainWindow):
         q_rect = self.frameGeometry()   # window geometry
         cw = QDesktopWidget().availableGeometry().center()  # determine center of the screen loc.
         q_rect.moveCenter(cw)
-
         self.move(q_rect.topLeft())     # move window to the middle
 
 
