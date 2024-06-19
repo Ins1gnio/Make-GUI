@@ -1,4 +1,5 @@
-# Practice 4 - generate window, label, and check box, then modify text based on check box's state
+# Practice 4 - label text style change based on check-box's state
+
 import sys
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, QWidget, QLabel, QCheckBox, QVBoxLayout
