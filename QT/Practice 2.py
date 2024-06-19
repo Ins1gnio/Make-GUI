@@ -1,7 +1,8 @@
-# Practice 2 - window setting, then add button
+# Practice 2 - label text 'Hello World'
 
 import sys
-from PyQt5.QtWidgets import QApplication, QDesktopWidget, QPushButton, QMainWindow
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QLabel, QMainWindow
 
 
 class MyApp(QMainWindow):
@@ -9,20 +10,12 @@ class MyApp(QMainWindow):
         super().__init__(*args, **kwargs)
         self.setwindow()
 
-        self.button_1 = QPushButton("Press", self)      # define button, with name and place on the window (self)
-        self.button_1.setStyleSheet("background-color: red; font-size: 30px")   # define initial color + font size
-        self.button_1.clicked.connect(self.button_1_click)  # signal & slots --> to do action
-        self.state = False  # button state
+        self.label_1 = QLabel(self)      # define label and place it on the window (self)
+        self.label_1.setStyleSheet("font-size: 30px")   # define font size
+        self.label_1.setAlignment(Qt.AlignCenter)   # place text in the middle
 
-        self.setCentralWidget(self.button_1)    # place the button widget as a whole window
-
-    def button_1_click(self):
-        if not self.state:  # state 1
-            self.button_1.setStyleSheet("background-color: green; font-size: 30px")
-            self.state = True
-        else:   # state 2
-            self.button_1.setStyleSheet("background-color: red; font-size: 30px")
-            self.state = False
+        self.setCentralWidget(self.label_1)    # place the label widget as a whole window
+        self.label_1.setText('Hello World :)')    # initial text
 
     def setwindow(self):
         self.setWindowTitle("QT-Practice 2")
@@ -31,6 +24,7 @@ class MyApp(QMainWindow):
         q_rect = self.frameGeometry()   # window geometry
         cw = QDesktopWidget().availableGeometry().center()  # determine center of the screen loc.
         q_rect.moveCenter(cw)
+
         self.move(q_rect.topLeft())     # move window to the middle
 
 
