@@ -1,4 +1,5 @@
-# Practice 3 - generate window and label, modify text based on window size
+# Practice 3 - label text based on window size
+
 import sys
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QDesktopWidget, QLabel, QMainWindow
