@@ -1,6 +1,7 @@
-# Practice 2 - generate window and modified button
+# Practice 2 - window setting, then add button
+
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QPushButton, QMainWindow
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QPushButton, QMainWindow
 
 
 class MyApp(QMainWindow):
