@@ -1,7 +1,7 @@
-# Practice 5 - add to list based on combo-box
+# Practice 5 - simple id password input
 
 import sys
-from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, QWidget, QListWidget, QComboBox, QPushButton, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, QWidget, QLabel, QLineEdit, QPushButton, QGridLayout
 
 
 class MyApp(QMainWindow):
@@ -9,40 +9,34 @@ class MyApp(QMainWindow):
         super().__init__(*args, **kwargs)
         self.setwindow()
 
-        self.list_1 = QListWidget(self)         # define list and place it on the window (self)
+        self.label_1 = QLabel('ID', self)           # define label for id
+        self.label_2 = QLabel('Password', self)     # define label for password
 
-        self.combobox_1 = QComboBox(self)       # define combo-box 1
-        self.combobox_1.addItems(['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'])   # add combo-box items
+        self.lineedit_1 = QLineEdit(self)           # define lineedit for id
+        self.lineedit_2 = QLineEdit(self)           # define lineedit for password
 
-        self.button_1 = QPushButton('Clear', self)  # add clear button
+        self.button_1 = QPushButton('Enter', self)      # button enter
+        self.button_2 = QPushButton('Cancel', self)     # button cancel
 
-        self.hbox_1 = QHBoxLayout(self)             # define horizontal layout (left to right)
-        self.hbox_1.addWidget(self.combobox_1)
-        self.hbox_1.addWidget(self.button_1)
+        self.glayout = QGridLayout(self)    # set grid layout (0, 0 is top left)
 
-        self.vbox_1 = QVBoxLayout(self)             # define vertical layout (top to bottom)
-        self.vbox_1.addWidget(self.list_1)
-        self.vbox_1.addLayout(self.hbox_1)
+        self.glayout.addWidget(self.label_1, 0, 0)
+        self.glayout.addWidget(self.label_2, 1, 0)
+
+        self.glayout.addWidget(self.lineedit_1, 0, 1, 1, 2)
+        self.glayout.addWidget(self.lineedit_2, 1, 1, 1, 2)
+
+        self.glayout.addWidget(self.button_1, 2, 1)
+        self.glayout.addWidget(self.button_2, 2, 2)
 
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)  # place the widget as a whole window
 
-        self.central_widget.setLayout(self.vbox_1)    # set layout to vbox
-
-        self.combobox_1.currentTextChanged.connect(self.combo_change)       # action --> combo-box text to list
-        # self.combobox_1.currentIndexChanged.connect(self.combo_change)    # action --> combo-box index to list
-
-        self.button_1.clicked.connect(self.clear)   # action --> clear list
-
-    def combo_change(self, i):
-        self.list_1.addItems([str(i)])
-
-    def clear(self):
-        self.list_1.clear()
+        self.central_widget.setLayout(self.glayout)    # set layout to glayout
 
     def setwindow(self):
         self.setWindowTitle("QT-Practice 5")
-        self.setGeometry(0, 0, 400, 200)    # define position and window size
+        self.setGeometry(0, 0, 200, 100)    # define position and window size
 
         q_rect = self.frameGeometry()   # window geometry
         cw = QDesktopWidget().availableGeometry().center()  # determine center of the screen loc.
