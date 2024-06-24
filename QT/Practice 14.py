@@ -33,8 +33,9 @@ class MyApp(QMainWindow):
             self.pb_1.setValue(i)
 
     def start_2(self):
-        for i in range(5):
-            for j in range(int(i * 20), int((i + 1) * 20) + 1):    # 0 to 100 %
+        slices = 8
+        for i in range(slices):
+            for j in range(int(i * 100 / slices), int((i + 1) * 100 / slices) + 1):    # 0 to 100 %
                 time.sleep(0.01)
                 self.pb_1.setValue(j)
             time.sleep(0.2)
